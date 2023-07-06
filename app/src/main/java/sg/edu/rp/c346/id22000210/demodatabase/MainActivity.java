@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnInsert, btnGetTasks;
     TextView tvResults;
+    ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         btnInsert = findViewById(R.id.btnInsert);
         btnGetTasks = findViewById(R.id.btnGetTasks);
         tvResults = findViewById(R.id.tvResults);
+        lv = findViewById(R.id.lv);
 
 
 
@@ -44,6 +48,13 @@ public class MainActivity extends AppCompatActivity {
                 // Create the DBHelper object, passing in the
                 // activity's Context
                 DBHelper db = new DBHelper(MainActivity.this);
+
+                // arraylist
+                ArrayList myList = db.getTasks();
+                // create an adapter
+                ArrayAdapter adapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, myList);
+                // link the adapter to the list view
+                lv.setAdapter(adapter);
 
                 // Insert a task
                 ArrayList<String> data = db.getTaskContent();
